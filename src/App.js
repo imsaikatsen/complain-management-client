@@ -9,6 +9,7 @@ import CreateTicket from './components/CreateTicket';
 import EditTicket from './pages/EditTicket';
 import AdminDashboard from './components/AdminDashboard';
 import CustomerDashboard from './components/CustomerDashboard';
+import TicketReplyView from './components/TicketReplyView';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -53,6 +54,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/tickets/:id" element={<TicketReplyView />} />
           <Route
             path="/customer-dashboard/create"
             element={

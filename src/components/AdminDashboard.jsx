@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import apiClient from "../api/apiUtils";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { sendReplyToTicket } from '../api/apiUtils';
+import apiClient from '../api/apiUtils';
 
 const AdminDashboard = () => {
   const [tickets, setTickets] = useState([]);
+  const [replies, setReplies] = useState({}); // Store replies for each ticket
   const navigate = useNavigate();
 
   // Fetch tickets
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await apiClient.get("/tickets");
-
-        if (Array.isArray(response.data.tickets)) {
-          setTickets(response.data.tickets);
-        } else {
-          console.error("Unexpected response format:", response.data);
-          alert("Failed to load tickets: Unexpected response format");
-        }
+        const response = await apiClient.get('/tickets');
+        setTickets(response.data.tickets || []);
       } catch (error) {
-        console.error("Error fetching tickets:", error);
-        alert("Failed to load tickets");
+        console.error('Error fetching tickets:', error);
+        alert('Failed to load tickets');
       }
     };
 
@@ -28,21 +24,34 @@ const AdminDashboard = () => {
   }, []);
 
   // Handle reply to a ticket
-  const handleReply = async (ticketId, reply) => {
-    try {
-      await apiClient.post(`/tickets/${ticketId}/reply`, { reply });
-      alert("Reply sent successfully");
-    } catch (error) {
-      console.error("Error sending reply:", error);
-      alert("Failed to send reply");
+  const handleReply = async (ticketId) => {
+    const reply = replies[ticketId]; // Get reply text for this ticket
+    if (!reply || reply.trim() === '') {
+      alert('Reply cannot be empty!');
+      return;
     }
+
+    try {
+      await sendReplyToTicket(ticketId, reply);
+      alert('Reply sent successfully');
+      setReplies((prevReplies) => ({ ...prevReplies, [ticketId]: '' })); // Clear reply
+      // Optionally, refresh tickets to reflect the update
+    } catch (error) {
+      console.error('Error sending reply:', error);
+      alert('Failed to send reply');
+    }
+  };
+
+  // Handle reply input change
+  const handleReplyChange = (ticketId, value) => {
+    setReplies((prevReplies) => ({ ...prevReplies, [ticketId]: value }));
   };
 
   // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    alert("Logged out successfully!");
-    navigate("/login");
+    localStorage.removeItem('token');
+    alert('Logged out successfully!');
+    navigate('/login');
   };
 
   return (
@@ -64,7 +73,7 @@ const AdminDashboard = () => {
       <main className="max-w-7xl mx-auto p-4">
         <h2 className="text-2xl font-bold mb-6">Tickets</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.isArray(tickets) && tickets.length > 0 ? (
+          {tickets.length > 0 ? (
             tickets.map((ticket) => (
               <div
                 key={ticket.id}
@@ -77,16 +86,20 @@ const AdminDashboard = () => {
                 <p className="text-gray-500 mt-2">
                   Status: <span className="font-bold">{ticket.status}</span>
                 </p>
-                <p className="text-gray-500 mt-2">Customer ID: {ticket.customerId}</p>
+                <p className="text-gray-500 mt-2">
+                  Customer ID: {ticket.customerId}
+                </p>
 
                 {/* Reply Section */}
                 <textarea
                   placeholder="Write your reply here"
+                  value={replies[ticket.id] || ''} // Bind reply value to state
+                  onChange={(e) => handleReplyChange(ticket.id, e.target.value)}
                   className="border-gray-300 border rounded-lg p-2 w-full mt-4 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
                 <button
                   className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg w-full font-semibold transition duration-300"
-                  onClick={() => handleReply(ticket.id, "Your reply text here")}
+                  onClick={() => handleReply(ticket.id)}
                 >
                   Send Reply
                 </button>

@@ -83,5 +83,8 @@ export const updateTicket = async (id, ticketData) => {
 // Delete a ticket by ID
 export const deleteTicket = (id) => apiClient.delete(`/tickets/${id}`);
 
+export const sendReplyToTicket = (ticketId, reply) =>
+  apiClient.post(`/tickets/${ticketId}/reply`, { reply });
+
 // Default export for apiClient (with interceptor)
 export default apiClient;

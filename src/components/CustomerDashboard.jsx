@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -111,16 +112,24 @@ const CustomerDashboard = () => {
               <h2 className="text-lg font-semibold text-gray-800 mb-2">
                 {ticket.subject}
               </h2>
-              <p className="text-gray-600 text-sm mb-2">{ticket.description}</p>
-              <span
-                className={`px-3 py-1 text-xs rounded ${
-                  ticket.status === 'Open'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-gray-100 text-gray-800'
-                }`}
+              <p className="text-gray-600 text-sm mb-2">
+                {ticket.description}
+                <span
+                  className={`px-3 py-1 text-xs rounded ${
+                    ticket.status === 'Open'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  }`}
+                >
+                  Status: {ticket.status}
+                </span>{' '}
+              </p>
+              <Link
+                to={`/tickets/${ticket.id}`}
+                className="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
               >
-                Status: {ticket.status}
-              </span>
+                See Reply
+              </Link>
               <div className="mt-4 flex justify-end space-x-2">
                 <button
                   onClick={() =>
