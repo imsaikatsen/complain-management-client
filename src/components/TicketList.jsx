@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { fetchTickets } from "../api/apiUtils";
+import React, { useEffect, useState } from 'react';
+import { fetchTickets } from '../api/apiUtils';
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
@@ -11,7 +11,7 @@ const TicketList = () => {
         const response = await fetchTickets();
         setTickets(response.data.tickets);
       } catch (error) {
-        console.error("Error fetching tickets:", error);
+        console.error('Error fetching tickets:', error);
       } finally {
         setLoading(false);
       }
@@ -22,12 +22,10 @@ const TicketList = () => {
 
   const handleUpdate = (id) => {
     alert(`Update ticket with ID: ${id}`);
-    // Add update logic here
   };
 
   const handleDelete = (id) => {
     alert(`Delete ticket with ID: ${id}`);
-    // Add delete logic here
   };
 
   if (loading) return <p>Loading tickets...</p>;
@@ -52,7 +50,9 @@ const TicketList = () => {
                 <td className="border px-4 py-2 text-center">{ticket.id}</td>
                 <td className="border px-4 py-2">{ticket.subject}</td>
                 <td className="border px-4 py-2">{ticket.description}</td>
-                <td className="border px-4 py-2 text-center">{ticket.status}</td>
+                <td className="border px-4 py-2 text-center">
+                  {ticket.status}
+                </td>
                 <td className="border px-4 py-2 text-center">
                   <button
                     onClick={() => handleUpdate(ticket.id)}

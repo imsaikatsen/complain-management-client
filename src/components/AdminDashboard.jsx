@@ -5,7 +5,7 @@ import apiClient from '../api/apiUtils';
 
 const AdminDashboard = () => {
   const [tickets, setTickets] = useState([]);
-  const [replies, setReplies] = useState({}); // Store replies for each ticket
+  const [replies, setReplies] = useState({});
   const navigate = useNavigate();
 
   // Fetch tickets
@@ -25,7 +25,7 @@ const AdminDashboard = () => {
 
   // Handle reply to a ticket
   const handleReply = async (ticketId) => {
-    const reply = replies[ticketId]; // Get reply text for this ticket
+    const reply = replies[ticketId];
     if (!reply || reply.trim() === '') {
       alert('Reply cannot be empty!');
       return;
@@ -34,7 +34,7 @@ const AdminDashboard = () => {
     try {
       await sendReplyToTicket(ticketId, reply);
       alert('Reply sent successfully');
-      setReplies((prevReplies) => ({ ...prevReplies, [ticketId]: '' })); // Clear reply
+      setReplies((prevReplies) => ({ ...prevReplies, [ticketId]: '' }));
       // Optionally, refresh tickets to reflect the update
     } catch (error) {
       console.error('Error sending reply:', error);
@@ -93,7 +93,7 @@ const AdminDashboard = () => {
                 {/* Reply Section */}
                 <textarea
                   placeholder="Write your reply here"
-                  value={replies[ticket.id] || ''} // Bind reply value to state
+                  value={replies[ticket.id] || ''}
                   onChange={(e) => handleReplyChange(ticket.id, e.target.value)}
                   className="border-gray-300 border rounded-lg p-2 w-full mt-4 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />

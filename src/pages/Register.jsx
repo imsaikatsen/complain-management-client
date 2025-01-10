@@ -1,28 +1,29 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import apiClient from "../api/apiUtils";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../api/apiUtils';
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [adminSecret, setAdminSecret] = useState(""); // For admin registration
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await apiClient.post("/auth/register", {
+      await apiClient.post('/auth/register', {
         name,
         email,
         password,
-        isAdminSecret: adminSecret, // Send secret for admin registration
       });
-      alert("Registration successful!");
-      navigate("/login");
+      alert('Registration successful!');
+      navigate('/login');
     } catch (error) {
-      console.error("Registration error:", error.response?.data || error.message);
-      alert("Failed to register");
+      console.error(
+        'Registration error:',
+        error.response?.data || error.message
+      );
+      alert('Failed to register');
     }
   };
 
@@ -49,13 +50,6 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Admin Secret (Optional)"
-          value={adminSecret}
-          onChange={(e) => setAdminSecret(e.target.value)}
           className="border p-2 w-full mb-4"
         />
         <button type="submit" className="bg-blue-500 text-white p-2 w-full">

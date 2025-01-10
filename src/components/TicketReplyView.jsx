@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchTicketById } from '../api/apiUtils'; // Import your utility function
+import { fetchTicketById } from '../api/apiUtils';
 
 const TicketReplyView = () => {
-  const { id } = useParams(); // Get the ticket ID from the URL
-  const navigate = useNavigate(); // For navigation
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,13 +12,13 @@ const TicketReplyView = () => {
   useEffect(() => {
     const fetchTicket = async () => {
       try {
-        const response = await fetchTicketById(id); // Call your utility function
-        setTicket(response.data); // Set the ticket data
+        const response = await fetchTicketById(id);
+        setTicket(response.data);
       } catch (err) {
         console.error('Error fetching ticket:', err);
         setError('Failed to fetch ticket details. Please try again.');
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     };
 

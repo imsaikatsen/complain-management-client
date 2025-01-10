@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchTicketById, updateTicket } from '../api/apiUtils';
 
 const EditTicket = () => {
-  const { id } = useParams(); // Get ticket ID from URL
+  const { id } = useParams();
   console.log('Ticket ID:', id);
   const navigate = useNavigate();
 

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/apiUtils"; // Replace with your actual login API call
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/apiUtils';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -12,17 +12,17 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await loginUser(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.isAdmin ? "admin" : "customer");
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.isAdmin ? 'admin' : 'customer');
       // Redirect based on role
       if (data.isAdmin) {
-        navigate("/admin-dashboard");
+        navigate('/admin-dashboard');
       } else {
-        navigate("/customer-dashboard");
+        navigate('/customer-dashboard');
       }
     } catch (err) {
       // Handle error in UI
-      alert(err.response?.data?.message || "Login failed. Please try again.");
+      alert(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
 

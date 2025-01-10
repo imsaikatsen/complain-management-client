@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,8 +15,8 @@ import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
-  const isAuthenticated = !!localStorage.getItem('token'); // Check if token exists
-  const userRole = localStorage.getItem('role'); // Get user role ('admin' or 'customer')
+  const isAuthenticated = !!localStorage.getItem('token');
+  const userRole = localStorage.getItem('role');
 
   const handleRedirect = () => {
     if (isAuthenticated) {

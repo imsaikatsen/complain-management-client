@@ -1,26 +1,25 @@
-import React, { useState } from "react";
-import { createTicket } from "../api/apiUtils";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { createTicket } from '../api/apiUtils';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTicket = () => {
-  const [subject, setSubject] = useState("");
-  const [description, setDescription] = useState("");
+  const [subject, setSubject] = useState('');
+  const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const ticketData = { subject, description }; // Collect from form inputs
-      const response = await createTicket(ticketData); // Call API function
-      alert(response.message); // Show success message
+      const ticketData = { subject, description };
+      const response = await createTicket(ticketData);
+      alert(response.message);
       navigate('/customer-dashboard');
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to create ticket.');
     }
   };
-  
 
   return (
     <div className="p-4">
@@ -57,4 +56,4 @@ const CreateTicket = () => {
   );
 };
 
-export default CreateTicket
+export default CreateTicket;
