@@ -8,8 +8,66 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+
+# Ticket Management System
+
+This project is a full-stack Ticket Management System that allows users to submit tickets and admins to manage and reply to them. The system includes client application.
+
+
+## Client Documentation
+
+### **Technologies Used**
+- React.js
+- Axios (HTTP client)
+- Tailwind CSS (Styling)
+- React Router (Routing)
+
+### **Setup Instructions**
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables**:
+   Create a `.env` file in the `client` directory and add the following variables:
+   ```env
+   REACT_APP_API_URL=http://localhost:5000
+   ```
+
+3. Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+### **Key Pages**
+
+| Page             | Description                              |
+|------------------|------------------------------------------|
+| Home             | Landing page for the application         |
+| Dashboard        | Displays tickets submitted by the user   |
+| Ticket Reply View| View a ticket's details and admin reply  |
+
+### **Key Files**
+- `src/pages/`: Contains React components for different pages.
+- `src/api/utils.js`: API utility functions for communicating with the backend.
+- `src/components/`: Reusable UI components.
+
+### **Styling**
+- Tailwind CSS is used for consistent and responsive styling.
+
+---
+
+## Additional Notes
+- Ensure that both the backend and client are running simultaneously.
+- Use a tool like Postman to test API endpoints during development.
+- Feel free to customize the project for your use case.
+
+---
+
+---
+
+### **Author**
+Developed by Saikat Sen
+
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
